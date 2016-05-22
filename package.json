@@ -1,0 +1,37 @@
+{
+  "name": "inline-svg-template",
+  "version": "1.0.0",
+  "description": "Tool to create templates out of svg images",
+  "bin": {
+    "ist": "bin/ist"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/okcoker/inline-svg-template.git"
+  },
+  "keywords": [
+    "svg",
+    "template",
+    "build",
+    "tool"
+  ],
+  "author": "Sean Coker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/okcoker/inline-svg-template/issues"
+  },
+  "homepage": "https://github.com/okcoker/inline-svg-template#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "debug": "^2.2.0",
+    "glob": "^7.0.3",
+    "mkdirp": "^0.5.1",
+    "promise": "^7.1.1",
+    "rimraf": "^2.5.2",
+    "svgo": "^0.6.6"
+  }
+}

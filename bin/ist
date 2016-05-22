@@ -1,0 +1,70 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+var colors = require('colors');
+var glob = require('glob');
+var program = require('commander');
+var ist = require('../');
+
+var pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8'));
+
+var defaultExtension = '.ist';
+
+function isBool(value) {
+    if (value === true || value === 'true') {
+        return true;
+    }
+
+    return false;
+}
+
+program
+    .version(pkg.version)
+    .usage('-i <path> -t <path> [options]')
+    .option('-i, --input <path>', 'Glob supported input path.')
+    .option('-t, --template <path>', 'Path to template config.')
+    .option('-o, --output [path]', 'Output path of generated templates. Defaults to input path')
+    .option('-c, --clean <boolean>', 'Clean output directory before generating new template files. Must provide separate input and output directories when this option is true. Defaults to false', isBool, false)
+    .option('-s, --use-svgo <boolean>', 'Use SVGO to optimize output. Defaults to false', isBool, false)
+    .option('-e, --ext <extension>', 'Extension for outputted template. Defaults to "' + defaultExtension + '"', defaultExtension)
+    .on('--help', function() {
+        console.log('  Examples:');
+        console.log();
+        console.log('    $ ist -i /path/to/an/svg.svg -t /path/to/templateConfig.js');
+        console.log('    $ ist -i "/path/to/svgs/**/*.svg" -t /path/to/templateConfig.js -o /path/to/generate/templates');
+        console.log('    $ ist -i "/path/to/svgs/**/*.svg" -t /path/to/templateConfig.js -o /path/to/generate/templates -c true');
+        console.log();
+    })
+    .parse(process.argv);
+
+if (!program.input || !program.template) {
+    program.outputHelp();
+    process.exit(1);
+}
+
+var files = glob.sync(program.input);
+
+if (!files.length) {
+    console.log(colors.yellow('No files found in', program.input));
+}
+
+if (!fs.statSync(program.template).isFile()) {
+    console.log(colors.red('No template config found at', program.template));
+}
+
+var templateConfig = require(path.resolve(program.template));
+var options = {
+    ext: program.ext,
+    output: path.resolve(program.output),
+    svgo: program.useSvgo,
+    clean: program.clean
+};
+
+ist(files, templateConfig, options).then(function() {
+    console.log(colors.green('Done!'));
+}).catch(function(err) {
+    console.log('Error running ist:', colors.red(err));
+});
