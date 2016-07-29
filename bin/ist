@@ -23,13 +23,13 @@ function isBool(value) {
 
 program
     .version(pkg.version)
-    .usage('-i <path> -t <path> [options]')
-    .option('-i, --input <path>', 'Glob supported input path.')
-    .option('-t, --template <path>', 'Path to template config.')
+    .usage('-i (path) -t (path) [options]')
+    .option('-i, --input (path)', 'Glob supported input path.')
+    .option('-t, --template (path)', 'Path to template config.')
     .option('-o, --output [path]', 'Output path of generated templates. Defaults to input path')
-    .option('-c, --clean <boolean>', 'Clean output directory before generating new template files. Must provide separate input and output directories when this option is true. Defaults to false', isBool, false)
-    .option('-s, --use-svgo <boolean>', 'Use SVGO to optimize output. Defaults to false', isBool, false)
-    .option('-e, --ext <extension>', 'Extension for outputted template. Defaults to "' + defaultExtension + '"', defaultExtension)
+    .option('-c, --clean [boolean]', 'Clean output directory before generating new template files. Must provide separate input and output directories when this option is true. Defaults to false', isBool, false)
+    .option('-s, --use-svgo [boolean]', 'Use SVGO to optimize output. Defaults to false', isBool, false)
+    .option('-e, --ext [extension]', 'Extension for outputted template. Defaults to "' + defaultExtension + '"', defaultExtension)
     .on('--help', function() {
         console.log('  Examples:');
         console.log();
