@@ -5,6 +5,10 @@ CLI tool that should lay foundation for https://github.com/okcoker/grunt-svg-rea
 This allows for custom templates and parsing.
 
 
+## ⚠️ Deprecated ⚠️
+
+You can use something more modern like https://react-svgr.com/docs/webpack/ instead.
+
 #### Usage
 
 ```sh
